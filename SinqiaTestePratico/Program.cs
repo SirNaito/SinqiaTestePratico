@@ -1,10 +1,4 @@
 ﻿using BibliotecaCategorias;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text; 
-using System.Threading.Tasks;
 
 namespace TesteRisco
 {
@@ -12,29 +6,75 @@ namespace TesteRisco
     {
         static void Main()
         {
-            // Leitura da entrada
-            Console.WriteLine("Digite a Data de Referencia:");
-            DateTime referenceDate = DateTime.ParseExact(Console.ReadLine(), "MM/dd/yyyy", null);
-            Console.WriteLine("Digite a Quantidade de Transações:");
-            int n = int.Parse(Console.ReadLine());
-            List<ITrade> trades = new List<ITrade>();
+            bool exitapp = false;
+            while (exitapp != false)
+            {
+                // Inserção dos parametros
 
-            for (int i = 0; i < n; i++)
-            {   
-                Console.WriteLine("Digite o valor, o setor e a data da "+(i+1)+"º operação:"); 
-                var input = Console.ReadLine().Split();
-                double value = double.Parse(input[0]);
-                string clientSector = input[1];
-                DateTime nextPaymentDate = DateTime.ParseExact(input[2], "MM/dd/yyyy", null);
+                //Data de Referencia
+                Console.WriteLine("Digite a Data de Referencia (dd/MM/yyyy):");
+                string referenceDateTemp = Console.ReadLine();
+                DateTime referenceDate;
+                while (!DateTime.TryParseExact(referenceDateTemp, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out referenceDate))
+                {
+                    Console.WriteLine("Data inválida, tente novamente ajustando valores ou adequando ao formato dd/MM/yyyy:");
+                    referenceDateTemp = Console.ReadLine();
+                }
 
-                trades.Add(new Trade(value, clientSector, nextPaymentDate));
+                //Nº de Transações a verificar
+                Console.WriteLine("Digite a Quantidade de Transações:");
+                string ntemp = Console.ReadLine();
+                int n;
+                while (!int.TryParse(ntemp, out n))
+                {
+                    Console.WriteLine("Valor inválido, tente novamente:");
+                    ntemp = Console.ReadLine();
+                }
+
+                List<ITrade> trades = new List<ITrade>();
+                for (int i = 0; i < n; i++)
+                {
+                    Console.WriteLine("Digite o valor, o setor e a data (dd/MM/yyyy) da " + (i + 1) + "º operação:");
+                    var input = Console.ReadLine().Split();
+
+                    double value;
+                    if (!double.TryParse(input[0], out value))
+                    {
+                        Console.WriteLine("Valor inválido, tente novamente:");
+                        i--;
+                        continue;
+                    }
+
+                    string clientSector = input[1];
+
+                    DateTime nextPaymentDate;
+                    if (!DateTime.TryParseExact(input[2], "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out nextPaymentDate))
+                    {
+                        Console.WriteLine("Data inválida, tente novamente ajustando valores ou adequando ao formato dd/MM/yyyy:");
+                        i--;
+                        continue;
+                    }
+
+                    trades.Add(new Trade(value, clientSector, nextPaymentDate));
+                }
+
+                // Criação do classificador de portfólio
+                PortfolioClassifier portfolioClassifier = new PortfolioClassifier();
+
+                // Classificar as operações
+                portfolioClassifier.ClassifyTrades(trades, referenceDate);
+                
+                //Pausa na operação
+                Console.ReadLine();
+
+                // Reiniciar aplicação
+                Console.WriteLine("Deseja avaliar mais transações? (s/n):");
+                string response = Console.ReadLine().ToLower();
+                if (response != "s")
+                {
+                    exitapp = true;
+                }
             }
-
-            // Criação do classificador de portfólio
-            PortfolioClassifier portfolioClassifier = new PortfolioClassifier();
-
-            // Classificar as operações
-            portfolioClassifier.ClassifyTrades(trades, referenceDate);
         }
     }
 
