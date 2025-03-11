@@ -2,14 +2,14 @@
 
 namespace BibliotecaCategorias
 {
-    interface ITrade
+    public interface ITrade
     {
-        double Value { get; }
-        string ClientSector { get; }
-        DateTime NextPaymentDate { get; }
+        double Value { get; } //Valor da Transação
+        string ClientSector { get; } //Setor do Cliente (Público ou Privado)
+        DateTime NextPaymentDate { get; } //Data do Próximo Pagamento
     }
 
-    class Trade : ITrade
+    public class Trade : ITrade
     {
         public double Value { get; private set; }
         public string ClientSector { get; private set; }
@@ -24,7 +24,7 @@ namespace BibliotecaCategorias
     }
 
 
-    abstract class Category
+    public abstract class Category
     {
         public abstract string GetCategory(ITrade trade, DateTime referenceDate);
     }
@@ -33,7 +33,7 @@ namespace BibliotecaCategorias
     {
         public override string GetCategory(ITrade trade, DateTime referenceDate)
         {
-            // Se a data do próximo pagamento estiver atrasada há mais de 30 dias
+            // Se a data do próximo pagamento estiver atrasada há mais de 30 dias baseado na data de referencia
             if ((referenceDate - trade.NextPaymentDate).Days > 30)
             {
                 return "EXPIRED";
@@ -46,7 +46,7 @@ namespace BibliotecaCategorias
     {
         public override string GetCategory(ITrade trade, DateTime referenceDate)
         {
-            // Se o valor for superior a 1,000,000 e o cliente for do setor privado
+            // Se o valor for superior a 1 milhão e o cliente for do setor privado
             if (trade.Value > 1000000 && trade.ClientSector == "Private")
             {
                 return "HIGHRISK";
@@ -59,7 +59,7 @@ namespace BibliotecaCategorias
     {
         public override string GetCategory(ITrade trade, DateTime referenceDate)
         {
-            // Se o valor for superior a 1,000,000 e o cliente for do setor público
+            // Se o valor for superior a 1 milhão e o cliente for do setor público
             if (trade.Value > 1000000 && trade.ClientSector == "Public")
             {
                 return "MEDIUMRISK";
@@ -68,7 +68,7 @@ namespace BibliotecaCategorias
         }
     }
 
-    class PortfolioClassifier
+    public class PortfolioClassifier
     {
         private List<Category> categories = new List<Category>();
 
@@ -97,7 +97,7 @@ namespace BibliotecaCategorias
                     if (category != null) break; // Se encontrar uma categoria, já não precisa verificar as outras
                 }
 
-                Console.WriteLine(category ?? "No category");
+                Console.WriteLine(category ?? "Unknown Category");
             }
         }
     }
