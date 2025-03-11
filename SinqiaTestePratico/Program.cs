@@ -7,7 +7,7 @@ namespace TesteRisco
         static void Main()
         {
             bool exitapp = false;
-            while (exitapp != false)
+            while (exitapp != true)
             {
                 // Inserção dos parametros
 
@@ -63,7 +63,7 @@ namespace TesteRisco
 
                 // Classificar as operações
                 portfolioClassifier.ClassifyTrades(trades, referenceDate);
-                
+
                 //Pausa na operação
                 Console.ReadLine();
 
@@ -77,5 +77,4 @@ namespace TesteRisco
             }
         }
     }
-
 }
