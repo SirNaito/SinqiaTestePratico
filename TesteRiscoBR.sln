@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35825.156 d17.13
+VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TesteRiscoBR", "SinqiaTestePratico\TesteRiscoBR.csproj", "{B2708091-8FA9-45A6-BB59-953C83860DA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BibliotecaCategorias", "BibliotecaCategorias\BibliotecaCategorias.csproj", "{656D4CBE-0724-4EA3-BF9D-9FCF19872330}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B2708091-8FA9-45A6-BB59-953C83860DA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2708091-8FA9-45A6-BB59-953C83860DA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2708091-8FA9-45A6-BB59-953C83860DA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{656D4CBE-0724-4EA3-BF9D-9FCF19872330}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{656D4CBE-0724-4EA3-BF9D-9FCF19872330}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{656D4CBE-0724-4EA3-BF9D-9FCF19872330}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{656D4CBE-0724-4EA3-BF9D-9FCF19872330}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

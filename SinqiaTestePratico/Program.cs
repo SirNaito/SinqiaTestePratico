@@ -1,43 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text; 
 using System.Threading.Tasks;
 
-namespace menu
+namespace TesteRisco
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            int opt = 1;
-            while (opt != 0)
-            {
-                Console.WriteLine("Olá, Selecione a opção desejada a seguir: \r");
-                Console.WriteLine("----------------------------------------- \n");
-                Console.WriteLine("1 - Comparar Riscos");
-                Console.WriteLine("2 - Adicionar Categorias");
-                Console.WriteLine("0 - Sair");
-                opt = int.Parse(Console.ReadLine());
+            // Leitura da entrada
+            DateTime referenceDate = DateTime.ParseExact(Console.ReadLine(), "MM/dd/yyyy", null);
+            int n = int.Parse(Console.ReadLine());
+            List<ITrade> trades = new List<ITrade>();
 
-                if (opt == 0)
-                {
-                    break;
-                }
-                else if (opt == 1) 
-                {
-                    Console.WriteLine("Comparação de Riscos selecionada");
-                }
-                else if (opt == 1)
-                {
-                    Console.WriteLine("Adição de Categorias selecionada");
-                }
-                else
-                {
-                    Console.WriteLine("Opção inválida");
-                }
+            for (int i = 0; i < n; i++)
+            {
+                var input = Console.ReadLine().Split();
+                double value = double.Parse(input[0]);
+                string clientSector = input[1];
+                DateTime nextPaymentDate = DateTime.ParseExact(input[2], "MM/dd/yyyy", null);
+
+                trades.Add(new Trade(value, clientSector, nextPaymentDate));
             }
 
+            // Criação do classificador de portfólio
+            PortfolioClassifier portfolioClassifier = new PortfolioClassifier();
+
+            // Classificar as operações
+            portfolioClassifier.ClassifyTrades(trades, referenceDate);
         }
     }
+
 }
