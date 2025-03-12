@@ -98,6 +98,7 @@ namespace BibliotecaCategorias
                 }
 
                 Console.WriteLine(category ?? "Unknown Category");
+
             }
         }
     }
